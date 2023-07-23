@@ -1,4 +1,5 @@
 from airflow import DAG
+from airflow.decorators import dag
 from airflow.operators.python import PythonOperator
 
 from spotify import extract_spotify_data, transform_spotify_data, load_transformed_spotify_data
@@ -6,26 +7,15 @@ from spotify import extract_spotify_data, transform_spotify_data, load_transform
 
 
 
-with DAG(
-    "etl_sales_daily",
+@dag(
+    dag_id="spotify_etl",
+    schedule_interval="@daily",
     start_date="",
-    schedule_interval=None,
-) as dag:
+    catchup=False
+)
+def spotify_etl():
+    data = extract_spotify_data()
+    transformed_data = transform_spotify_data(data)
+    load_transformed_spotify_data(transform_spotify_data)
+    
 
-    extract_data = PythonOperator(
-        task_id="extract_data",
-        python_callable = extract_spotify_data,   
-        dag=dag,  
-    )
-    trasform_data = PythonOperator(
-        task_id="transform_data",
-        python_callable = transform_spotify_data,
-        dag=dag
-    )
-    load_data = PythonOperator(
-        task_id="load_data",
-        python_callable = load_transformed_spotify_data,
-        dag=dag
-    )
-   
-    extract_data >> trasform_data >> load_data

@@ -1,7 +1,9 @@
+from airflow.decorators import task
 from spotify import SPOTIFY_CLIENT as spotify_client
 from spotipy import Spotify
 
 
+@task()
 def extract_spotify_data(client: Spotify = spotify_client) -> dict:
     """
     Extract data from Spotify
