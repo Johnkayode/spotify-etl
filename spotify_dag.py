@@ -14,8 +14,14 @@ from spotify import extract_spotify_data, transform_spotify_data, load_transform
     catchup=False
 )
 def spotify_etl():
-    data = extract_spotify_data()
-    transformed_data = transform_spotify_data(data)
-    load_transformed_spotify_data(transform_spotify_data)
+    spotify_data = extract_spotify_data()
+    transformed_data = transform_spotify_data(spotify_data)
+    load_data = load_transformed_spotify_data(transformed_data)
+
+    spotify_data >> transformed_data >> load_data
+
+    
     
 
+
+spotify_pipeline = spotify_etl()
