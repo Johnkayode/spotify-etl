@@ -1,6 +1,7 @@
 from airflow import DAG
 from airflow.decorators import dag
-from airflow.operators.python import PythonOperator
+import pendulum
+
 
 from spotify import extract_spotify_data, transform_spotify_data, load_transformed_spotify_data
 
@@ -10,7 +11,7 @@ from spotify import extract_spotify_data, transform_spotify_data, load_transform
 @dag(
     dag_id="spotify_etl",
     schedule_interval="@daily",
-    start_date="",
+    start_date=pendulum.datetime(2023, 7, 26, 8, 0, 0),
     catchup=False
 )
 def spotify_etl():
@@ -19,9 +20,6 @@ def spotify_etl():
     load_data = load_transformed_spotify_data(transformed_data)
 
     spotify_data >> transformed_data >> load_data
+   
 
-    
-    
-
-
-spotify_pipeline = spotify_etl()
+spotify_etl_dag = spotify_etl()
