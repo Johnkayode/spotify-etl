@@ -32,7 +32,6 @@ MANIFEST
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
-*.cache*
 
 # Installer logs
 pip-log.txt
@@ -48,6 +47,7 @@ htmlcov/
 nosetests.xml
 coverage.xml
 *.cover
+*.cache*
 *.py,cover
 .hypothesis/
 .pytest_cache/

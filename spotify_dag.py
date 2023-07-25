@@ -11,7 +11,7 @@ from spotify import extract_spotify_data, transform_spotify_data, load_transform
 @dag(
     dag_id="spotify_etl",
     schedule_interval="@daily",
-    start_date=pendulum.datetime(2023, 7, 26, 8, 0, 0),
+    start_date=pendulum.datetime(2023, 7, 25, 8, 0, 0),
     catchup=False
 )
 def spotify_etl():
