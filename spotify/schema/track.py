@@ -15,7 +15,7 @@ class Track:
     album_art_link: str
     popularity: int
     explicit: bool
-    played_at: Optional[str]
+    played_at: Optional[datetime]
 
     def __init__(self, track: dict) -> None:
         self.track = track["track"]
