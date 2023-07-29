@@ -14,9 +14,10 @@ REDIRECT_URI = config("REDIRECT_URI")
 def get_access_token() -> str:
     # TODO: refresh access token if access token has expired
     try:
-        return ACCESS_TOKEN
+       return refresh_access_token()
+
     except:
-        return refresh_access_token()
+        return ACCESS_TOKEN
 
 
 def refresh_access_token(
@@ -35,7 +36,6 @@ def refresh_access_token(
     )
 
     response_json = response.json()
-    print(response_json)
     return response_json.get("access_token")
 
 
