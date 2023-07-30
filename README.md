@@ -3,8 +3,9 @@ ETL Pipeline to obtain tracks and their information from a user's recently playe
 
 - Spotify API
 - Airflow
-- DBT
 - PostgreSQL
+- DBT
+- Tableau
 
 # Setup
 ## Project
