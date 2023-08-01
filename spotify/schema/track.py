@@ -6,7 +6,6 @@ class Track:
     track: dict
     id: str
     name: str
-    genres: list
     lead_artist_id: str
     lead_artist_name: str
     duration: str
@@ -30,8 +29,23 @@ class Track:
         self.album_id = self.track["album"]["id"]
         self.album_name = self.track["album"]["name"]
         self.album_art_link = self.track["album"]["images"][1]["url"]
-        
 
+    @property
+    def __to_dict__(self) -> dict:
+        return {
+            "id": self.id,
+            "name": self.name,
+            "duration": self.duration,
+            "popularity": self.popularity,
+            "explicit": self.explicit,
+            "lead_artist_id": self.lead_artist_id,
+            "lead_artist_name": self.lead_artist_name,
+            "album_id": self.album_id,
+            "album_name": self.album_name,
+            "album_art_link": self.album_art_link,
+            "played_at": self.played_at
+        }
+        
     def __repr__(self) -> str:
         return f"{self.name} - {self.lead_artist_name}"
 

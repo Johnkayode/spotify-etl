@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  # Airflow service
+  airflow:
+    image: apache/airflow:latest
+    container_name: airflow
+    environment:
+      - AIRFLOW__CORE__EXECUTOR=LocalExecutor
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+    depends_on:
+      - postgres
+      - redis
+
+  # PostgreSQL service
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      - POSTGRES_DB=airflow
+      - POSTGRES_USER=airflow-user
+      - POSTGRES_PASSWORD=airflow-password
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  # Redis service
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+
+volumes:
+  pg_data:
