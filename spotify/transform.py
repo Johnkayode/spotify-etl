@@ -33,13 +33,4 @@ def transform_spotify_data(tracks: list, client: Spotify=spotify_client) -> None
 
 
 
-import json
-
-with open('result.json') as f:
-    data = json.load(f)
-    f.close()
-
-tracks: list = data.get("items")
-transform_spotify_data(tracks)
-
 
