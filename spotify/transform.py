@@ -27,7 +27,6 @@ def transform_spotify_data(tracks: list, client: Spotify=spotify_client) -> None
     track_df.to_csv(f"spotify/data/tracks.csv", index=False)
 
     artist_df = pd.DataFrame.from_dict(artist_list)
-    #artist_df = track_df.sort_values("played_at", ascending=True)
     artist_df.to_csv(f"spotify/data/artists.csv", index=False)
 
     return None
