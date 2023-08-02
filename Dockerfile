@@ -5,15 +5,15 @@ FROM apache/airflow:latest
 ENV AIRFLOW_HOME=/usr/local/airflow
 
 # Switch to the root user
-USER airflow
-
-RUN pip install -r requirements.txt
+USER root
 
 # Create the AIRFLOW_HOME directory and change its ownership to the airflow user
 RUN mkdir -p ${AIRFLOW_HOME} && chown -R airflow: ${AIRFLOW_HOME
 
 # Switch back to the airflow user
 USER airflow
+
+RUN pip install -r requirements.txt
 
 # Initialize the Airflow database
 RUN airflow db init
