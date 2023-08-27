@@ -1,26 +1,50 @@
-version: "3.7"
+version: '3'
 services:
-  webserver:
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  airflow-webserver:
     build:
       context: .
       dockerfile: Dockerfile
-    command: webserver
+    container_name: airflow-webserver
+    environment:
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql://airflow:airflow@postgres:5432/airflow
+      - AIRFLOW__CORE__DAGS_FOLDER=/usr/local/etl-pipeline/airflow/dags 
+      - PYTHONPATH=/usr/local/etl-pipeline
     volumes:
-      - ./dags:/usr/local/airflow/dags
+      - ./:/usr/local/etl-pipeline
     ports:
       - "8080:8080"
-  scheduler:
+    depends_on:
+      - postgres
+    command:
+      - "webserver"
+
+  airflow-scheduler:
     build:
       context: .
       dockerfile: Dockerfile
-    command: scheduler
-    volumes:
-      - ./dags:/usr/local/airflow/dags
-  postgres:
-    image: postgres:latest
+    container_name: airflow-scheduler
     environment:
-      - POSTGRES_USER=airflow
-      - POSTGRES_PASSWORD=airflow
-      - POSTGRES_DB=airflow
+      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql://airflow:airflow@postgres:5432/airflow
+      - AIRFLOW__CORE__DAGS_FOLDER=/usr/local/etl-pipeline/airflow/dags 
+      - PYTHONPATH=/usr/local/etl-pipeline
+    volumes:
+      - ./:/usr/local/etl-pipeline
+    depends_on:
+      - airflow-webserver
+    command:
+      - "scheduler"
+
 volumes:
-  postgres-db-volume:
+  pg_data:

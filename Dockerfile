@@ -1,17 +1,26 @@
-# Use an official Python runtime as a parent image
-FROM python:3.8-slim-buster
+#Use the official Airflow base image as the starting point
+FROM apache/airflow:2.1.2
 
-# Set the working directory in the container
-WORKDIR /app
+COPY requirements.txt /requirements.txt
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r /requirements.txt
 
-# Copy the entire project folder into the container
-COPY . /app/
 
-# Install any necessary dependencies
-RUN pip install apache-airflow psycopg2
+# Set environment variables
+ENV AIRFLOW_HOME=/usr/local/airflow
 
-# Expose the Airflow web UI port (optional)
-EXPOSE 8080
+USER root
+RUN mkdir /usr/local/airflow/
+RUN mkdir /usr/local/etl-pipeline
 
-# Define the command to run when the container starts
-CMD ["airflow", "webserver", "-p", "8080"]
+# Copy the DAGs and other files to the container
+COPY ./ /usr/local/etl-pipeline
+
+# Change the working directory
+WORKDIR /usr/local/etl-pipeline
+
+# Change ownership of the /usr/local/airflow directory and its contents
+RUN chown -R airflow: /usr/local/airflow
+USER airflow
+
+CMD [ "airflow", "db", "init"]

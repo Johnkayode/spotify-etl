@@ -7,7 +7,7 @@ from spotipy import Spotify
 from spotify.schema import Artist, Track
 
 
-#@task()
+@task()
 def transform_spotify_data(tracks: list, client: Spotify=spotify_client) -> None:
     print("Received %d track(s): " % len(tracks))
 

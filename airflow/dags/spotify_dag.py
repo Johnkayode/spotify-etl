@@ -2,9 +2,7 @@ from airflow import DAG
 from airflow.decorators import dag
 import pendulum
 
-
 from spotify import extract_spotify_data, transform_spotify_data, load_transformed_spotify_data
-
 
 
 
