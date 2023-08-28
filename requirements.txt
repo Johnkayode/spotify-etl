@@ -1,6 +1,7 @@
 apache-airflow
 pendulum
 python-decouple
+pandas
 redis
 spotipy
 psycopg2-binary

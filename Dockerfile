@@ -1,5 +1,5 @@
 #Use the official Airflow base image as the starting point
-FROM apache/airflow:2.1.2
+FROM apache/airflow:slim-2.6.1
 
 COPY requirements.txt /requirements.txt
 RUN pip install --upgrade pip

@@ -18,9 +18,15 @@ services:
       dockerfile: Dockerfile
     container_name: airflow-webserver
     environment:
-      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql://airflow:airflow@postgres:5432/airflow
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql://airflow:airflow@postgres:5432/airflow
       - AIRFLOW__CORE__DAGS_FOLDER=/usr/local/etl-pipeline/airflow/dags 
       - PYTHONPATH=/usr/local/etl-pipeline
+      - CLIENT_ID=${CLIENT_ID}
+      - CLIENT_SECRET=${CLIENT_SECRET}
+      - REDIRECT_URI=${REDIRECT_URI}
+      - ACCESS_TOKEN=${ACCESS_TOKEN}
+      - REFRESH_TOKEN=${REFRESH_TOKEN}
+      - USER_ID=${USER_ID}
     volumes:
       - ./:/usr/local/etl-pipeline
     ports:
@@ -28,7 +34,7 @@ services:
     depends_on:
       - postgres
     command:
-      - "webserver"
+      - webserver
 
   airflow-scheduler:
     build:
@@ -36,15 +42,21 @@ services:
       dockerfile: Dockerfile
     container_name: airflow-scheduler
     environment:
-      - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql://airflow:airflow@postgres:5432/airflow
+      - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql://airflow:airflow@postgres:5432/airflow
       - AIRFLOW__CORE__DAGS_FOLDER=/usr/local/etl-pipeline/airflow/dags 
       - PYTHONPATH=/usr/local/etl-pipeline
+      - CLIENT_ID=${CLIENT_ID}
+      - CLIENT_SECRET=${CLIENT_SECRET}
+      - REDIRECT_URI=${REDIRECT_URI}
+      - ACCESS_TOKEN=${ACCESS_TOKEN}
+      - REFRESH_TOKEN=${REFRESH_TOKEN}
+      - USER_ID=${USER_ID}
     volumes:
       - ./:/usr/local/etl-pipeline
     depends_on:
       - airflow-webserver
     command:
-      - "scheduler"
+      - scheduler
 
 volumes:
   pg_data:
