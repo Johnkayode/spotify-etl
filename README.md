@@ -7,11 +7,7 @@ ETL Pipeline to obtain tracks and their information from a user's recently playe
 - Docker
 
 # Setup
-## Project
 
-- Install dependencies `pip install -r requirements.txt`
-
-  
 ## Spotify API Access
 
 - Ensure you have a Spotify account created
