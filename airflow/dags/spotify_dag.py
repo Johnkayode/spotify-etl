@@ -1,7 +1,6 @@
-from airflow import DAG
 from airflow.decorators import dag
 from airflow.providers.postgres.operators.postgres import PostgresOperator
-import pendulum
+from airflow.utils.dates import days_ago
 
 from spotify import extract_spotify_data, transform_spotify_data, load_transformed_spotify_data
 
@@ -10,7 +9,7 @@ from spotify import extract_spotify_data, transform_spotify_data, load_transform
 @dag(
     dag_id="spotify_etl",
     schedule_interval="@daily",
-    start_date=pendulum.datetime(2023, 7, 25, 8, 0, 0),
+    start_date=days_ago(1),
     catchup=False
 )
 def spotify_etl():

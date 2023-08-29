@@ -4,8 +4,7 @@ ETL Pipeline to obtain tracks and their information from a user's recently playe
 - Spotify API
 - Airflow
 - PostgreSQL
-- DBT
-- Tableau
+- Docker
 
 # Setup
 ## Project
@@ -27,3 +26,9 @@ ETL Pipeline to obtain tracks and their information from a user's recently playe
 - Run `python -m spotify.auth.token -c your_authorization_code` or `python -m spotify.auth.token --code your_authorization_code` to get your **access** and **refresh** tokens.
 - Set the tokens in yout `.env` file.
 
+## Run Project
+
+- Run `docker run --build` to build and run the containers
+- Open `localhost:8080` to view the Airflow UI (You might need to create a user)
+- Run the DAG
+- Open `localhost:5000` to view the analysis 

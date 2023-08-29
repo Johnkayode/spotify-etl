@@ -16,8 +16,8 @@ def load_transformed_spotify_data(data: dict) -> list:
             sql = get_or_create_artist(artist)
             artist_id = hook.get_first(sql)
             if artist_id and artist_id[0] is not None:
-                sql = create_track(track, artist_id[0])
-                hook.run(sql)
+                sql, values = create_track(track, artist_id[0])
+                hook.run(sql, parameters=values)
         except Exception as e:
             raise e
        
