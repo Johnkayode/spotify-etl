@@ -9,8 +9,8 @@ def extract_spotify_data(client: Spotify=spotify_client) -> list:
     """
     Extract data from Spotify
     """
-    last_timestamp = datetime.today().timestamp
-    resp: dict = client.current_user_recently_played(limit=50, after=last_timestamp)
+    last_timestamp = datetime.today().timestamp()
+    resp: dict = client.current_user_recently_played(limit=50) #after=last_timestamp
     tracks: list = resp.get("items")
 
     print("%d track(s) retrieved from Spotify" % len(tracks))

@@ -132,5 +132,6 @@ dmypy.json
 
 # data
 result.json
+logs/
 spotify/data/artists.csv
 spotify/data/tracks.csv

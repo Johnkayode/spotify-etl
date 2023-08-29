@@ -20,6 +20,7 @@ services:
     environment:
       - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql://airflow:airflow@postgres:5432/airflow
       - AIRFLOW__CORE__DAGS_FOLDER=/usr/local/etl-pipeline/airflow/dags 
+      - AIRFLOW__WEBSERVER__SECRET_KEY=my$e(ret%ey2103
       - PYTHONPATH=/usr/local/etl-pipeline
       - CLIENT_ID=${CLIENT_ID}
       - CLIENT_SECRET=${CLIENT_SECRET}
@@ -29,6 +30,7 @@ services:
       - USER_ID=${USER_ID}
     volumes:
       - ./:/usr/local/etl-pipeline
+      - ./logs:/usr/local/airflow/logs
     ports:
       - "8080:8080"
     depends_on:
@@ -44,6 +46,7 @@ services:
     environment:
       - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql://airflow:airflow@postgres:5432/airflow
       - AIRFLOW__CORE__DAGS_FOLDER=/usr/local/etl-pipeline/airflow/dags 
+      - AIRFLOW__SCHEDULER__SECRET_KEY=my$e(ret%ey2103
       - PYTHONPATH=/usr/local/etl-pipeline
       - CLIENT_ID=${CLIENT_ID}
       - CLIENT_SECRET=${CLIENT_SECRET}
@@ -53,6 +56,7 @@ services:
       - USER_ID=${USER_ID}
     volumes:
       - ./:/usr/local/etl-pipeline
+      - ./logs:/usr/local/airflow/logs
     depends_on:
       - airflow-webserver
     command:

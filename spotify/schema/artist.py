@@ -6,7 +6,7 @@ class Artist:
     genres: list
 
     def __init__(self, artist: dict) -> None:
-        self.id = artist["id"]
+        self.id = str(artist["id"])
         self.name = artist["name"]
         self.genres = artist["genres"]
 

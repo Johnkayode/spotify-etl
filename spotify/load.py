@@ -9,9 +9,16 @@ def load_transformed_spotify_data(data: dict) -> list:
     artists = data["artists"]
 
     hook = PostgresHook()
-    with hook.get_conn() as connection:
-        for track in recently_played_tracks:
-            artist_id = get_or_create_artist(track.lead_artist_id)
-            sql = create_track(track, artist_id)
-            connection.run(sql)
-            connection.commit()
+   
+    for track in recently_played_tracks:
+        artist = next((artist for artist in artists if artist["id"] == track["lead_artist_id"]), None)
+        try:
+            sql = get_or_create_artist(artist)
+            artist_id = hook.get_first(sql)
+            if artist_id and artist_id[0] is not None:
+                sql = create_track(track, artist_id[0])
+                hook.run(sql)
+        except Exception as e:
+            raise e
+       
+            
