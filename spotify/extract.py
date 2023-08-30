@@ -18,13 +18,13 @@ def extract_spotify_data(client: Spotify=spotify_client) -> list:
     Extract data from Spotify
     """
     hook = PostgresHook()
+
+    # retrieve timestamp of last played track from the database
     sql = retrieve_last_played_at()
     res = hook.get_first(sql)
-
-    # retrieve last timestamp from the database
     last_timestamp = res[0] if res and res[0] is not None else None
     last_timestamp = convert_dt_to_timestamp(last_timestamp) if last_timestamp else None
-    
+
     resp: dict = client.current_user_recently_played(limit=50, after=last_timestamp)
     tracks: list = resp.get("items")
 
