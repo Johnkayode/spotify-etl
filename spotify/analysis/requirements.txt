@@ -1,0 +1,4 @@
+python-decouple
+flask
+psycopg2-binary
+

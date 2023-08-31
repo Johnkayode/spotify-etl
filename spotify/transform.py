@@ -26,7 +26,10 @@ def transform_spotify_data(tracks: list, client: Spotify=spotify_client) -> None
 
     # copy last added tracks to file
     track_df = pd.DataFrame.from_dict(track_list)
-    track_df = track_df.sort_values("played_at", ascending=True)
+    try:
+        track_df = track_df.sort_values("played_at", ascending=True)
+    except:
+        pass
     track_df.to_csv(f"spotify/data/tracks.csv", index=False)
 
     # copy last added artists to file
