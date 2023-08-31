@@ -27,4 +27,4 @@ ETL Pipeline to obtain tracks and their information from a user's recently playe
 - Run `docker run --build` to build and run the containers
 - Open `localhost:8080` to view the Airflow UI (You might need to create a user)
 - Run the DAG
-- Open `localhost:5000` to view the analysis 
+- Open `localhost:5000` to view the API
