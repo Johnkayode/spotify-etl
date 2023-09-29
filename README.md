@@ -2,7 +2,7 @@
 ETL pipeline to retrieve tracks and their information from a user's recently played tracks on Spotify.
 
 - Spotify API
-- iwAirflow
+- Airflow
 - PostgreSQL
 - Docker
 
