@@ -26,11 +26,11 @@ ETL pipeline to retrieve tracks and their information from a user's recently pla
 
 - Run `docker run --build` to build and run the containers
 - Create Airflow user 
-`docker exec -it airflow-webserver airflow users create \
-          --username admin \
-          --firstname FIRST_NAME \
-          --lastname LAST_NAME \
-          --role Admin \
+`docker exec -it airflow-webserver airflow users create 
+          --username admin 
+          --firstname FIRST_NAME 
+          --lastname LAST_NAME 
+          --role Admin 
           --email admin@example.org`
 - Open `localhost:8080` to view the Airflow UI (You need to create an admin user)
 - Create a default connection for Postgres (conn_id: postgres_default)
