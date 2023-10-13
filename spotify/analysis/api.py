@@ -3,7 +3,7 @@ import psycopg2
 from flask import Flask, Response
 
 
-from utils import retrieve_most_played_track, retrieve_top_played_artists
+from utils import retrieve_top_played_tracks, retrieve_top_played_artists, retrieve_top_played_genres
 
 
 
@@ -25,27 +25,37 @@ def index():
     _all_tracks_count = result[0][0] if result and result[0] else 0
 
     # Fetch the most played track from the database
-    sql = retrieve_most_played_track()
+    sql = retrieve_top_played_tracks()
     cursor.execute(sql)
     result = cursor.fetchall()
-    _most_played_track = result[0] if result else None
+    _top_played_tracks = result if result else []
 
     sql = retrieve_top_played_artists()
     cursor.execute(sql)
     result = cursor.fetchall()
-    _top_played_artists = result if result else None
+    _top_played_artists = result if result else []
+
+    sql = retrieve_top_played_genres()
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    _top_played_genres = result if result else []
     
 
     conn.close()
 
-    most_played_track = {
-        "name": _most_played_track[0],
-        "artist": _most_played_track[1],
-        "album_art_url": _most_played_track[2],
-        "play_count": _most_played_track[3],
-    }
-
+    top_played_tracks = list()
     top_played_artists = list()
+    top_played_genres = list()
+
+    for track in _top_played_tracks:
+        top_played_tracks.append(
+            {
+                "name": track[0],
+                "artist": track[1],
+                "album_art_url": track[2],
+                "play_count": track[3],
+            }
+        )
 
     for artist in _top_played_artists:
         top_played_artists.append(
@@ -56,10 +66,19 @@ def index():
             }
         )
 
+    for genre in _top_played_genres:
+        top_played_genres.append(
+            {
+                "name": genre[0],
+                "play_count": genre[1],
+            }
+        )
+
     data = {
         "all_tracks": _all_tracks_count,
-        "most_played_track": most_played_track,
-        "top_played_artists": top_played_artists
+        "top_played_tracks": top_played_tracks,
+        "top_played_artists": top_played_artists,
+        "top_played_genres": top_played_genres
     }
 
     return Response(status=200, response=json.dumps(data))

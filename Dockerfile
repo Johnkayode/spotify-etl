@@ -21,6 +21,5 @@ WORKDIR /usr/local/etl-pipeline
 
 # Change ownership of the /usr/local/airflow directory and its contents
 RUN chown -R airflow: /usr/local/airflow
-USER airflow
 
-CMD [ "airflow", "db", "init"]
+USER airflow

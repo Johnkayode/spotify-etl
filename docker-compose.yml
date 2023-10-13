@@ -36,9 +36,7 @@ services:
       - "8080:8080"
     depends_on:
       - postgres
-    command:
-      - webserver
-
+    entrypoint: ./init.sh
   airflow-scheduler:
     build:
       context: .
